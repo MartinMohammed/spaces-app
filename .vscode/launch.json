@@ -8,6 +8,9 @@
             "type": "node",
             "request": "launch",
             "name": "Debug local file",
+
+            // It uses the specified runtime arguments and environment variables to execute the file specified in the "args" attribute.
+            // In this case, the "runtimeArgs": ["-r", "ts-node/register"] tells the debugger to use ts-node as the runtime to execute TypeScript files directly.
             "runtimeArgs": [
                 "-r",
                 "ts-node/register"
@@ -16,7 +19,11 @@
                 "${relativeFile}"
             ], 
             "env": {
+                // Set the AWS region to "eu-central-1" to target AWS resources in the Frankfurt region.
                 "AWS_REGION": "eu-central-1",
+
+                // Set the TABLE_NAME environment variable to the name of the DynamoDB table.
+                // This environment variable will be used in the code to interact with the specified DynamoDB table.
                 "TABLE_NAME": "SpaceTable-060f5e472080"
             }
         }
