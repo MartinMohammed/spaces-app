@@ -1,3 +1,4 @@
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { JSONError } from "./Validator";
 import { randomUUID } from "crypto";
 /**
@@ -37,4 +38,26 @@ export function constructResponseError(statusCode: number, message: string) {
       statusCode,
     },
   });
+}
+
+/**
+ * Checks if the user making the request is a member of the "admin" group.
+ * This function assumes that the user is already authenticated and authorized by Cognito.
+ * The Cognito authorizer adds additional information about the request and the user to the event object in the integration request.
+ *
+ * @param {APIGatewayProxyEvent} event - The event object containing details about the incoming API Gateway request.
+ * @returns {boolean} - True if the user is a member of the "admin" group, false otherwise.
+ */
+export function isAdminGroupMember(event: APIGatewayProxyEvent): boolean {
+  // Check if the 'cognito:groups' claim exists in the event object's authorizer.
+  const groups: Array<string> =
+    event.requestContext.authorizer?.claims["cognito:groups"];
+
+  // If the 'cognito:groups' claim exists, check if the "admin" group is included.
+  if (groups) {
+    return groups.includes("admin");
+  }
+
+  // If the 'cognito:groups' claim is not present or empty, return false.
+  return false;
 }

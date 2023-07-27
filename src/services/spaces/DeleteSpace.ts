@@ -11,13 +11,23 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { DeleteItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { constructResponseError } from "../shared/Utils";
+import { constructResponseError, isAdminGroupMember } from "../shared/Utils";
 
 export async function deleteSpace(
   event: APIGatewayProxyEvent,
   dynamoDbClient: DynamoDBClient
 ): Promise<APIGatewayProxyResult> {
   let response: APIGatewayProxyResult;
+
+  // Only cognito users that are member of the admin group should be able to delete items
+  const isAuthorized = isAdminGroupMember(event);
+  if (!isAuthorized) {
+    const response: APIGatewayProxyResult = {
+      statusCode: 401,
+      body: constructResponseError(401, "Unauthorized!"),
+    };
+    return response;
+  }
 
   // Check if the 'id' query parameter is provided to fetch a specific item.
   const spaceId = event.queryStringParameters?.id;
