@@ -1,2 +1,25 @@
-GET https://8komvp719j.execute-api.eu-central-1.amazonaws.com/prod/spaces
+GET https://u3ivsr2h29.execute-api.eu-central-1.amazonaws.com/prod/spaces
+###
+
+GET https://u3ivsr2h29.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=41be7d45-6c62-4664-bd7b-bdf4474308d0
+###
+
+POST https://u3ivsr2h29.execute-api.eu-central-1.amazonaws.com/prod/spaces
+content-type: application/json
+
+{
+    "location": "Paris",
+    "name": "Nice city"
+}
+###
+PUT https://u3ivsr2h29.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=41be7d45-6c62-4664-bd7b-bdf4474308d0
+content-type: application/json
+
+{
+    "location": "Berlin"
+}
+###
+
+DELETE  https://u3ivsr2h29.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=41be7d45-6c62-4664-bd7b-bdf4474308d0
+content-type: application/json
 ###

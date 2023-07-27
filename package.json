@@ -10,11 +10,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
     "@types/node": "^20.4.5",
+    "@types/uuid": "^9.0.2",
     "aws-cdk": "^2.88.0",
     "aws-cdk-lib": "^2.88.0",
     "constructs": "^10.2.69",
+    "esbuild": "^0.18.17",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.378.0",
+    "@aws-sdk/client-s3": "^3.377.0",
+    "@aws-sdk/lib-dynamodb": "^3.378.0",
+    "@aws-sdk/util-dynamodb": "^3.378.0",
+    "uuid": "^9.0.0"
   }
 }
