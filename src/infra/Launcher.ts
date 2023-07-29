@@ -20,23 +20,24 @@ import { DataStack } from "./stacks/DataStack";
 import { LambdaStack } from "./stacks/LambdaStack";
 import { ApiStack } from "./stacks/ApiStack";
 import { AuthStack } from "./stacks/AuthStack";
+import { Stacks } from "../customTypes/infra";
 
 // Create the AWS CDK app.
 const app = new App();
 
 // Instantiate the DataStack to define data storage resources.
-const dataStack = new DataStack(app, "DataStack");
+const dataStack = new DataStack(app, Stacks.DATA);
 
 // Instantiate the LambdaStack with a reference to the Spaces DynamoDB table from DataStack.
-const lambdaStack = new LambdaStack(app, "LambdaStack", {
+const lambdaStack = new LambdaStack(app, Stacks.LAMBDA, {
   spacesTable: dataStack.spacesTable,
 });
 
 // Instantiate the AuthStack to manage user authentication and authorization using Amazon Cognito.
-const authStack = new AuthStack(app, "AuthStack");
+const authStack = new AuthStack(app, Stacks.AUTH);
 
 // Instantiate the ApiStack and integrate it with the Spaces Lambda function from LambdaStack.
-new ApiStack(app, "ApiStack", {
+new ApiStack(app, Stacks.API, {
   spacesLambdaIntegration: lambdaStack.spacesLambdaIntegration,
   userPool: authStack.userPool,
 });

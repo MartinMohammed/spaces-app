@@ -10,6 +10,7 @@ import { updateSpace } from "./UpdateSpace";
 import { deleteSpace } from "./DeleteSpace";
 import { JSONError, MissingFieldError } from "../shared/Validator";
 import { constructResponseError } from "../shared/Utils";
+import { HTTPMethods } from "../../customTypes";
 
 // Initialize S3 client outside of the lambda function to enable lambda to cache the initialization and re-use it in subsequent calls.
 // The S3 client needs the appropriate IAM policies to send this command.
@@ -69,16 +70,16 @@ async function handler(
   let response: APIGatewayProxyResult;
   try {
     switch (event.httpMethod) {
-      case "GET":
+      case HTTPMethods.GET:
         response = await getSpaces(event, dynamoDbClient);
         break;
-      case "POST":
+      case HTTPMethods.POST:
         response = await postSpaces(event, dynamoDbClient);
         break;
-      case "PUT":
+      case HTTPMethods.PUT:
         response = await updateSpace(event, dynamoDbClient);
         break;
-      case "DELETE":
+      case HTTPMethods.DELETE:
         response = await deleteSpace(event, dynamoDbClient);
         break;
       default:

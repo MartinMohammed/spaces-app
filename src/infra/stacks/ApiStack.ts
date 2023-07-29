@@ -7,8 +7,9 @@ import {
   MethodOptions,
   RestApi,
 } from "aws-cdk-lib/aws-apigateway";
-import { IUserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
+import { IUserPool } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
+import { HTTPMethods } from "../../customTypes";
 
 interface ApiStackProps extends StackProps {
   spacesLambdaIntegration: LambdaIntegration;
@@ -55,22 +56,22 @@ export class ApiStack extends Stack {
 
     // One lambda for exact one resource.
     spacesResource.addMethod(
-      "GET",
+      HTTPMethods.GET,
       props.spacesLambdaIntegration,
       optionsWithAuth
     );
     spacesResource.addMethod(
-      "POST",
+      HTTPMethods.POST,
       props.spacesLambdaIntegration,
       optionsWithAuth
     );
     spacesResource.addMethod(
-      "DELETE",
+      HTTPMethods.DELETE,
       props.spacesLambdaIntegration,
       optionsWithAuth
     );
     spacesResource.addMethod(
-      "PUT",
+      HTTPMethods.PUT,
       props.spacesLambdaIntegration,
       optionsWithAuth
     );

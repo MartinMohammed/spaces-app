@@ -12,7 +12,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { MissingFieldError, validateAsSpaceEntry } from "../shared/Validator";
+import { validateAsSpaceEntry } from "../shared/Validator";
 import { createRandomId, parseJSON } from "../shared/Utils";
 
 export async function postSpaces(
