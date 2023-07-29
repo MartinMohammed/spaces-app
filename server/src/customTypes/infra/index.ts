@@ -20,6 +20,7 @@ export enum CfnOutputs {
   SPACE_USER_POOL_CLIENT_ID = "SpaceUserPoolClientId",
   SPACE_IDENTITY_POOL_ID = "SpaceIdentityPoolId",
   SPACE_FINDER_URL = "SpaceFinderUrl",
+  SPACE_FINDER_PHOTOS_BUCKET_NAME = "SpaceFinderPhotosBucketName",
 }
 
 /**

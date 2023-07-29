@@ -35,7 +35,9 @@ const lambdaStack = new LambdaStack(app, Stacks.LAMBDA, {
 });
 
 // Instantiate the AuthStack to manage user authentication and authorization using Amazon Cognito.
-const authStack = new AuthStack(app, Stacks.AUTH);
+const authStack = new AuthStack(app, Stacks.AUTH, {
+  photosBucket: dataStack.photosBucket,
+});
 
 // Instantiate the ApiStack and integrate it with the Spaces Lambda function from LambdaStack.
 new ApiStack(app, Stacks.API, {

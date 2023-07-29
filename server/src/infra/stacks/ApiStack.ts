@@ -11,7 +11,7 @@ import {
 } from "aws-cdk-lib/aws-apigateway";
 import { IUserPool } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
-import { HTTPMethods } from "../../customTypes";
+import { HttpMethod } from "aws-cdk-lib/aws-lambda";
 
 interface ApiStackProps extends StackProps {
   spacesLambdaIntegration: LambdaIntegration;
@@ -68,22 +68,22 @@ export class ApiStack extends Stack {
 
     // One lambda for exact one resource.
     spacesResource.addMethod(
-      HTTPMethods.GET,
+      HttpMethod.GET,
       props.spacesLambdaIntegration,
       methodOptionsWithAuth
     );
     spacesResource.addMethod(
-      HTTPMethods.POST,
+      HttpMethod.POST,
       props.spacesLambdaIntegration,
       methodOptionsWithAuth
     );
     spacesResource.addMethod(
-      HTTPMethods.DELETE,
+      HttpMethod.DELETE,
       props.spacesLambdaIntegration,
       methodOptionsWithAuth
     );
     spacesResource.addMethod(
-      HTTPMethods.PUT,
+      HttpMethod.PUT,
       props.spacesLambdaIntegration,
       methodOptionsWithAuth
     );

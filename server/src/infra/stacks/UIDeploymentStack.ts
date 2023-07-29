@@ -32,15 +32,7 @@ export class UIDeploymentStack extends Stack {
     });
 
     // Specify the directory where the frontend application's build files are located.
-    const uiDir = join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "..",
-      "space-finder-client",
-      "dist"
-    );
+    const uiDir = join(__dirname, "..", "..", "..", "..", "client", "dist");
 
     // Check if the specified directory (uiDir) exists.
     if (!existsSync(uiDir)) {

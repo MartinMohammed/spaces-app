@@ -24,6 +24,10 @@
  * @param {StackProps} props - Optional properties for configuring the stack, if needed.
  */
 
+interface AuthStackProps extends StackProps {
+  photosBucket: IBucket;
+}
+
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import {
@@ -40,6 +44,7 @@ import {
   Role,
 } from "aws-cdk-lib/aws-iam";
 import { CfnOutputs } from "../../customTypes/infra";
+import { IBucket } from "aws-cdk-lib/aws-s3";
 
 export class AuthStack extends Stack {
   public userPool: UserPool;
@@ -49,7 +54,7 @@ export class AuthStack extends Stack {
   private unAuthenticatedRole: Role;
   private adminRole: Role;
 
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: AuthStackProps) {
     super(scope, id, props);
 
     // Create and configure the Amazon Cognito User Pool and User Pool Client.
@@ -58,7 +63,7 @@ export class AuthStack extends Stack {
     this.identityPool = this.createIdentityPool();
 
     const { authenticatedRole, unAuthenticatedRole, adminRole } =
-      this.createRoles();
+      this.createRoles(props.photosBucket);
     this.authenticatedRole = authenticatedRole;
     this.unAuthenticatedRole = unAuthenticatedRole;
     this.adminRole = adminRole;
@@ -169,7 +174,7 @@ export class AuthStack extends Stack {
    * Creates the roles needed for the AWS Cognito Identity Pool.
    * @returns An object containing the created roles: authenticatedRole, unAuthenticatedRole, and adminRole.
    */
-  private createRoles(): {
+  private createRoles(photosBucket: IBucket): {
     authenticatedRole: Role;
     unAuthenticatedRole: Role;
     adminRole: Role;
@@ -230,8 +235,9 @@ export class AuthStack extends Stack {
     this.adminRole.addToPolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: ["s3:ListAllMyBuckets"],
-        resources: ["*"],
+        actions: ["s3:PutObject", "s3:PutObjectAcl"],
+        // Access all items that are only accessible within the photosBucket.
+        resources: [photosBucket.bucketArn + "/*"],
       })
     );
 

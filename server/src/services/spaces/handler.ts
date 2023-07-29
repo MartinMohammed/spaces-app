@@ -1,16 +1,14 @@
 // Import required modules and libraries
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { Context } from "vm";
-import { S3Client } from "@aws-sdk/client-s3";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { postSpaces } from "./PostSpaces";
 import { getSpaces } from "./GetSpaces";
-import { error } from "console";
 import { updateSpace } from "./UpdateSpace";
 import { deleteSpace } from "./DeleteSpace";
 import { JSONError, MissingFieldError } from "../shared/Validator";
 import { addCorsHeader, constructResponseError } from "../shared/Utils";
-import { HTTPMethods } from "../../customTypes";
+import { HttpMethod } from "aws-cdk-lib/aws-lambda";
 
 // // Initialize S3 client outside of the lambda function to enable lambda to cache the initialization and re-use it in subsequent calls.
 // // The S3 client needs the appropriate IAM policies to send this command.
@@ -71,16 +69,16 @@ async function handler(
 
   try {
     switch (event.httpMethod) {
-      case HTTPMethods.GET:
+      case HttpMethod.GET:
         response = await getSpaces(event, dynamoDbClient);
         break;
-      case HTTPMethods.POST:
+      case HttpMethod.POST:
         response = await postSpaces(event, dynamoDbClient);
         break;
-      case HTTPMethods.PUT:
+      case HttpMethod.PUT:
         response = await updateSpace(event, dynamoDbClient);
         break;
-      case HTTPMethods.DELETE:
+      case HttpMethod.DELETE:
         response = await deleteSpace(event, dynamoDbClient);
         break;
       default:
