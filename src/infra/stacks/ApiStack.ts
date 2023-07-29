@@ -3,8 +3,10 @@ import { Stack, StackProps } from "aws-cdk-lib";
 import {
   AuthorizationType,
   CognitoUserPoolsAuthorizer,
+  Cors,
   LambdaIntegration,
   MethodOptions,
+  ResourceOptions,
   RestApi,
 } from "aws-cdk-lib/aws-apigateway";
 import { IUserPool } from "aws-cdk-lib/aws-cognito";
@@ -44,36 +46,46 @@ export class ApiStack extends Stack {
     // Attach the Cognito User Pools Authorizer to the API Gateway.
     authorizer._attachToApi(api);
 
-    const optionsWithAuth: MethodOptions = {
+    const methodOptionsWithAuth: MethodOptions = {
       authorizationType: AuthorizationType.COGNITO,
       authorizer: {
         authorizerId: authorizer.authorizerId,
       },
     };
 
+    const resourceOptionsWithCors: ResourceOptions = {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: Cors.ALL_METHODS,
+      },
+    };
+
     // Add a api ressource (path) by hand.
-    const spacesResource = api.root.addResource("spaces");
+    const spacesResource = api.root.addResource(
+      "spaces",
+      resourceOptionsWithCors
+    );
 
     // One lambda for exact one resource.
     spacesResource.addMethod(
       HTTPMethods.GET,
       props.spacesLambdaIntegration,
-      optionsWithAuth
+      methodOptionsWithAuth
     );
     spacesResource.addMethod(
       HTTPMethods.POST,
       props.spacesLambdaIntegration,
-      optionsWithAuth
+      methodOptionsWithAuth
     );
     spacesResource.addMethod(
       HTTPMethods.DELETE,
       props.spacesLambdaIntegration,
-      optionsWithAuth
+      methodOptionsWithAuth
     );
     spacesResource.addMethod(
       HTTPMethods.PUT,
       props.spacesLambdaIntegration,
-      optionsWithAuth
+      methodOptionsWithAuth
     );
   }
 }

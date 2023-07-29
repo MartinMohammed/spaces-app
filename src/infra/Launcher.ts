@@ -21,6 +21,7 @@ import { LambdaStack } from "./stacks/LambdaStack";
 import { ApiStack } from "./stacks/ApiStack";
 import { AuthStack } from "./stacks/AuthStack";
 import { Stacks } from "../customTypes/infra";
+import { UIDeploymentStack } from "./stacks/UIDeploymentStack";
 
 // Create the AWS CDK app.
 const app = new App();
@@ -41,3 +42,6 @@ new ApiStack(app, Stacks.API, {
   spacesLambdaIntegration: lambdaStack.spacesLambdaIntegration,
   userPool: authStack.userPool,
 });
+
+// Instantiate the UIStack that is responsible for deploying frontend application and distributing it with CloudFront
+new UIDeploymentStack(app, Stacks.UI_DEPLOYMENT);

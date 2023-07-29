@@ -9,12 +9,12 @@ import { error } from "console";
 import { updateSpace } from "./UpdateSpace";
 import { deleteSpace } from "./DeleteSpace";
 import { JSONError, MissingFieldError } from "../shared/Validator";
-import { constructResponseError } from "../shared/Utils";
+import { addCorsHeader, constructResponseError } from "../shared/Utils";
 import { HTTPMethods } from "../../customTypes";
 
-// Initialize S3 client outside of the lambda function to enable lambda to cache the initialization and re-use it in subsequent calls.
-// The S3 client needs the appropriate IAM policies to send this command.
-const s3Client = new S3Client({});
+// // Initialize S3 client outside of the lambda function to enable lambda to cache the initialization and re-use it in subsequent calls.
+// // The S3 client needs the appropriate IAM policies to send this command.
+// const s3Client = new S3Client({});
 
 /* Any code outside the actual lambda function is considered context and can be reused for subsequent calls,
  * such as DynamoDB database connections and more.
@@ -68,6 +68,7 @@ async function handler(
   // let message: string;
 
   let response: APIGatewayProxyResult;
+
   try {
     switch (event.httpMethod) {
       case HTTPMethods.GET:
@@ -105,6 +106,12 @@ async function handler(
       };
     }
   }
+
+  /**
+   * Before sending a reponse back to the client,
+   * to enable cors for all methods and origins.
+   */
+  addCorsHeader(response);
   return response;
 }
 

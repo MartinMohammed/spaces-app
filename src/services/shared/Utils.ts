@@ -61,3 +61,22 @@ export function isAdminGroupMember(event: APIGatewayProxyEvent): boolean {
   // If the 'cognito:groups' claim is not present or empty, return false.
   return false;
 }
+
+/**
+ * Adds CORS (Cross-Origin Resource Sharing) header to the given API Gateway proxy result object.
+ * CORS headers allow browsers to make cross-origin requests and are necessary to enable communication
+ * between frontend applications and APIs hosted on different domains.
+ *
+ * @param {APIGatewayProxyResult} arg - The API Gateway proxy result object to which the CORS header will be added.
+ * @returns {APIGatewayProxyResult} - The modified API Gateway proxy result object with the added CORS header.
+ */
+export function addCorsHeader(arg: APIGatewayProxyResult) {
+  // If the "headers" property does not exist in the API Gateway proxy result object, create it and set the "Access-Control-Allow-Origin" header to "*".
+  if (arg.headers === undefined) {
+    arg.headers = {};
+  }
+
+  // If the "headers" property already exists, set the "Access-Control-Allow-Origin" header to "*".
+  arg.headers["Access-Control-Allow-Origin"] = "*";
+  arg.headers["Access-Control-Allow-Methods"] = "*";
+}

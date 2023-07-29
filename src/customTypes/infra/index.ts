@@ -11,6 +11,7 @@ export enum Stacks {
   LAMBDA = "LambdaStack",
   AUTH = "AuthStack",
   API = "ApiStack",
+  UI_DEPLOYMENT = "UIDeploymentStack",
 }
 
 /** Enum for CfnOutputs Defined in the CDK Application */
@@ -18,6 +19,7 @@ export enum CfnOutputs {
   SPACE_USER_POOL_ID = "SpaceUserPoolId",
   SPACE_USER_POOL_CLIENT_ID = "SpaceUserPoolClientId",
   SPACE_IDENTITY_POOL_ID = "SpaceIdentityPoolId",
+  SPACE_FINDER_URL = "SpaceFinderUrl",
 }
 
 /**
@@ -27,6 +29,7 @@ export enum CfnOutputs {
  * - LAMBDA: Represents the Lambda Stack, which contains AWS Lambda functions and related resources.
  * - AUTH: Represents the Auth Stack, responsible for configuring AWS Cognito User Pool and Identity Pool for user authentication.
  * - API: Represents the API Stack, which contains resources related to AWS API Gateway and API deployment.
+ * - UI_DEPLOYMENT: Represents the API Stack, which contains resources related to Deploying the User interface (frontend)
  *
  * CfnOutputs Enum:
  *
