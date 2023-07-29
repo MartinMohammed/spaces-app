@@ -1,4 +1,10 @@
-import './App.css'
+/**
+ * The root component of the application.
+ * Handles routing and rendering of different pages.
+ *
+ * @returns {JSX.Element} - The JSX element representing the root component of the application.
+ */
+import './App.css';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import { useState } from 'react';
@@ -14,22 +20,25 @@ const dataService = new DataService(authService);
 function App() {
   const [userName, setUserName] = useState<string | undefined>(undefined);
 
+  // Create the router configuration using createBrowserRouter.
   const router = createBrowserRouter([
     {
       element: (
         <>
-          <NavBar userName={userName}/>
+          {/* Render the NavBar component with the current userName */}
+          <NavBar userName={userName} />
           <Outlet />
         </>
       ),
-      children:[
+      children: [
         {
           path: "/",
           element: <div>Hello world!</div>,
         },
         {
           path: "/login",
-          element: <LoginComponent authService={authService} setUserNameCb={setUserName}/>,
+          // Render the LoginComponent with the authService and setUserNameCb props.
+          element: <LoginComponent authService={authService} setUserNameCb={setUserName} />,
         },
         {
           path: "/profile",
@@ -37,21 +46,24 @@ function App() {
         },
         {
           path: "/createSpace",
-          element: <CreateSpace dataService={dataService}/>,
+          // Render the CreateSpace component with the dataService prop.
+          element: <CreateSpace dataService={dataService} />,
         },
         {
           path: "/spaces",
-          element: <Spaces dataService={dataService}/>,
+          // Render the Spaces component with the dataService prop.
+          element: <Spaces dataService={dataService} />,
         },
-      ]
+      ],
     },
   ]);
 
   return (
     <div className="wrapper">
+      {/* Provide the router to the application */}
       <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

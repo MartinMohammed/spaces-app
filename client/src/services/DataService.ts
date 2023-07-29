@@ -2,10 +2,11 @@
  * Service class responsible for interacting with the backend data and performing CRUD operations on spaces.
  * This class uses AWS S3 for storing space photos and AWS API Gateway for communicating with the backend API.
  */
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand, S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { AuthService } from "./AuthService";
 import { DataStack, ApiStack } from "../../../server/outputs.json";
 import { SpaceEntry } from "../components/model/model";
+import { CognitoUser } from "@aws-amplify/auth";
 
 const spacesUrl = ApiStack.SpacesApiEndpoint36C4F3B6 + "spaces";
 
@@ -89,10 +90,11 @@ export class DataService {
    * @returns {Promise<string>} - A promise that resolves to the URL of the uploaded file in the S3 bucket.
    */
   private async uploadPublicFile(file: File): Promise<string> {
-    const credentials = await this.authService.getTemporaryCredentials();
+    const credentials: S3ClientConfig["credentials"] =
+      (await this.authService.getTemporaryCredentials()) as S3ClientConfig["credentials"];
     if (!this.s3Client) {
       this.s3Client = new S3Client({
-        credentials: credentials as any,
+        credentials: credentials,
         region: this.awsRegion,
       });
     }

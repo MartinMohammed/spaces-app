@@ -36,22 +36,21 @@ export class DataStack extends Stack {
      */
     this.photosBucket = new Bucket(this, "SpaceFinderPhotos", {
       bucketName: `space-finder-photos-${suffix}`,
-      // Effectively making the bucket publicly accessible.
+      cors: [
+        {
+          allowedMethods: [HttpMethods.HEAD, HttpMethods.GET, HttpMethods.PUT],
+          allowedOrigins: ["*"],
+          allowedHeaders: ["*"],
+        },
+      ],
+      // accessControl: BucketAccessControl.PUBLIC_READ, // currently not working,
+      objectOwnership: ObjectOwnership.OBJECT_WRITER,
       blockPublicAccess: {
         blockPublicAcls: false,
         blockPublicPolicy: false,
         ignorePublicAcls: false,
         restrictPublicBuckets: false,
       },
-      // The uploading account will own the object.
-      objectOwnership: ObjectOwnership.OBJECT_WRITER,
-      publicReadAccess: true,
-      cors: [
-        {
-          allowedMethods: [HttpMethods.HEAD, HttpMethods.GET, HttpMethods.PUT],
-          allowedOrigins: ["*"],
-        },
-      ],
     });
 
     new CfnOutput(this, CfnOutputs.SPACE_FINDER_PHOTOS_BUCKET_NAME, {
