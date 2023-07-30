@@ -1,5 +1,5 @@
 /** This stack will our ApiGateway (rest api) */
-import { Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import {
   AuthorizationType,
   CognitoUserPoolsAuthorizer,
@@ -12,6 +12,7 @@ import {
 import { IUserPool } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
 import { HttpMethod } from "aws-cdk-lib/aws-lambda";
+import { CfnOutputs } from "../../customTypes/infra";
 
 interface ApiStackProps extends StackProps {
   spacesLambdaIntegration: LambdaIntegration;

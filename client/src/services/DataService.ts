@@ -6,7 +6,6 @@ import { PutObjectCommand, S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { AuthService } from "./AuthService";
 import { DataStack, ApiStack } from "../../../server/outputs.json";
 import { SpaceEntry } from "../components/model/model";
-import { CognitoUser } from "@aws-amplify/auth";
 
 const spacesUrl = ApiStack.SpacesApiEndpoint36C4F3B6 + "spaces";
 

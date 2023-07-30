@@ -69,7 +69,7 @@ export class UIDeploymentStack extends Stack {
     });
 
     // Create a CloudFormation output to display the URL of the CloudFront distribution.
-    new CfnOutput(this, CfnOutputs.SPACE_FINDER_URL, {
+    new CfnOutput(this, CfnOutputs.SPACE_FINDER_DISTRIBUTION_URL, {
       value: distribution.distributionDomainName,
     });
   }
