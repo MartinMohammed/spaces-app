@@ -1,5 +1,5 @@
 // Import required modules and AWS CDK constructs
-import { Stack, StackProps } from "aws-cdk-lib";
+import { Duration, Stack, StackProps } from "aws-cdk-lib";
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
 import { ITable } from "aws-cdk-lib/aws-dynamodb";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
@@ -7,6 +7,7 @@ import {
   Code,
   Function as LambdaFunction,
   Runtime,
+  Tracing,
 } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
@@ -84,6 +85,11 @@ export class LambdaStack extends Stack {
       environment: {
         TABLE_NAME: props.spacesTable.tableName,
       },
+      // Enable AWS X-Ray Tracing for Lambda Function.
+      tracing: Tracing.ACTIVE,
+      // The function execution time (in seconds) after which Lambda terminates the function.
+      // Because the execution time affects cost, set this value based on the function's expected execution time.
+      timeout: Duration.minutes(1),
     });
 
     // Enable the lambda function to put an Item into the db.

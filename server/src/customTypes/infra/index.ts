@@ -23,6 +23,7 @@ export enum CfnOutputs {
   SPACE_FINDER_DISTRIBUTION_URL = "SpaceFinderDistributionUrl",
   // SPACE_FINDER_API_ENDPOINT = "SpaceFinderAPIEndpoint",
   SPACE_FINDER_PHOTOS_BUCKET_NAME = "SpaceFinderPhotosBucketName",
+  SPACE_FINDER_TABLE_NAME = "SpaceFinderTableName",
 }
 
 /**

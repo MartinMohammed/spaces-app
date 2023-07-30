@@ -54,6 +54,7 @@ export class DataStack extends Stack {
       },
     });
 
+    // Photos Bucket Name
     new CfnOutput(this, CfnOutputs.SPACE_FINDER_PHOTOS_BUCKET_NAME, {
       value: this.photosBucket.bucketName,
     });
