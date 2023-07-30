@@ -1,6 +1,9 @@
 // Import required modules and libraries
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { Context } from "vm";
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+  Context,
+} from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { postSpaces } from "./PostSpaces";
 import { getSpaces } from "./GetSpaces";

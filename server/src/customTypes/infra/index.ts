@@ -12,6 +12,7 @@ export enum Stacks {
   AUTH = "AuthStack",
   API = "ApiStack",
   UI_DEPLOYMENT = "UIDeploymentStack",
+  MONITOR = "MonitorStack",
 }
 
 /** Enum for CfnOutputs Defined in the CDK Application */

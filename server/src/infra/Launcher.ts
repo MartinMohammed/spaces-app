@@ -22,6 +22,7 @@ import { ApiStack } from "./stacks/ApiStack";
 import { AuthStack } from "./stacks/AuthStack";
 import { Stacks } from "../customTypes/infra";
 import { UIDeploymentStack } from "./stacks/UIDeploymentStack";
+import { MonitorStack } from "./stacks/MonitorStack";
 
 // Create the AWS CDK app.
 const app = new App();
@@ -47,3 +48,6 @@ new ApiStack(app, Stacks.API, {
 
 // Instantiate the UIStack that is responsible for deploying frontend application and distributing it with CloudFront
 new UIDeploymentStack(app, Stacks.UI_DEPLOYMENT);
+
+// Instantiate the MonitorStack which is responsible for collecting metrics and setting up CW Alarms and invoke a lambda function through AWS SNS
+new MonitorStack(app, Stacks.MONITOR);
