@@ -33,12 +33,13 @@ export async function getSpaces(
       Key: marshall({ id: spaceId }),
     });
     const getItemResponse = await dynamoDbClient.send(command);
+
     if (getItemResponse.Item === undefined) {
       const notFoundResponse: APIGatewayProxyResult = {
         statusCode: 404, // OK - Request was successful
         body: constructResponseError(
           404,
-          `Item with id ${spaceId} was not found!`
+          `Space Item with id ${spaceId} was not found!`
         ),
       };
       return notFoundResponse;

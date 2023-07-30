@@ -16,6 +16,8 @@
  * - COGNITO_USER_POOL_CLIENT_ID: A string representing the client ID associated with the Cognito User Pool.
  * - COGNITO_IDENTITY_POOL_ID: A string representing the unique identifier of the Cognito Identity Pool.
  * - SLACK_WEBHOOK_URL: A string representing the slack webhook url where the cloud watch alarms are sent to.
+ * - TABLE_NAME: A string representing the dynamo db table that stores the space items.
+ * - TEST_DIR: Determines which dir in the test folder should be used to match for testing files.
  *
  * Usage:
  * - After including this 'custom.d.ts' file in your TypeScript project, the TypeScript compiler
@@ -34,12 +36,15 @@
  * const userPoolClientId: string = process.env.COGNITO_USER_POOL_CLIENT_ID;
  * const identityPoolId: string = process.env.COGNITO_IDENTITY_POOL_ID;
  * const SLACK_WEBHOOK_URL: string = process.env.SLACK_WEBHOOK_URL;
+ * const TABLE_NAME: string = process.env.TABLE_NAME;
+ * const TEST_DIR: string = process.env.TEST_DIR;
  * ```
  */
 
 // TypeScript Declaration File for Custom Environment Variables.
 declare namespace NodeJS {
   interface ProcessEnv {
+    TABLE_NAME: string;
     COGNITO_TEST_USERNAME: string;
     COGNITO_TEST_PASSWORD: string;
     AWS_REGION: string;
@@ -47,5 +52,6 @@ declare namespace NodeJS {
     COGNITO_USER_POOL_CLIENT_ID: string;
     COGNITO_IDENTITY_POOL_ID: string;
     SLACK_WEBHOOK_URL: string;
+    TEST_DIR: "services" | "infra";
   }
 }
