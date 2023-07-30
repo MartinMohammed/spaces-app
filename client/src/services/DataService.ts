@@ -30,7 +30,7 @@ export class DataService {
    * @returns {string} - A placeholder reservation ID. (Actual implementation logic needs to be added.)
    */
   public reserveSpace(spaceId: string) {
-    return "123";
+    return spaceId;
   }
 
   /**
