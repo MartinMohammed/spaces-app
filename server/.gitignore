@@ -9,7 +9,7 @@ outputs.json
 
 # Test & Deployment
 spaces.http
-test
+/test/debugger
 
 # Logs
 logs
