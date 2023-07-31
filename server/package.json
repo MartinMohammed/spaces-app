@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "TEST_DIR=services jest",
+    "test": "jest",
     "test:watch": " jest --watch --colors",
     "deploy": "cdk deploy --all --outputs-file outputs.json"
   },
